@@ -14,6 +14,11 @@ id_counter = 1
 def create_ads():
     global id_counter
     data = request.json or {}
+
+    # валидация обязательных полей при создании
+    if not data.get('title') or not data.get('description') or not data.get('owner'):
+        return jsonify({'error': 'Поля title, description и owner обязательны для заполнения'}), 400
+        
     new_ad = {
         'id': id_counter,
         'title': data.get('title'),
